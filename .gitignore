@@ -1,0 +1,25 @@
+# R / RStudio
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+.Ruserdata
+
+# Résultats d'analyse et données (ne pas versionner les FASTQ)
+dada2_out/
+nanopore_out/
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+dada2_session.rds
+dada2_log.txt
+nanopore_session.rds
+nanopore_log.txt
+
+# ... sauf le petit jeu d'exemple simulé de l'appli nanopore
+!nanopore/exemple/reads/*.fastq.gz
+
+# Système
+.DS_Store
+Thumbs.db
