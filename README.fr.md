@@ -10,12 +10,30 @@ Le dépôt contient deux applis qui partagent les mêmes modules R (`pipeline/`)
 - **`nanopore/app.R`** : amplicons Oxford Nanopore, du FASTQ à la table de séquences,
   entièrement en R, donc utilisable sous Windows (voir [Appli nanopore](#appli-nanopore)).
 
+## Récupérer le code
+
+Avec git :
+
+```
+git clone https://github.com/MathKarst/Dada2_shinyapp.git
+```
+
+Sans git : sur la [page du dépôt](https://github.com/MathKarst/Dada2_shinyapp), cliquer sur
+**Code → Download ZIP**, puis décompresser. Le dossier s'appelle alors `Dada2_shinyapp-main`
+(on peut le renommer). Mises à jour : `git pull` dans le dossier, ou retélécharger le ZIP.
+
 ## Installation
 
 ```r
 install.packages(c("shiny", "DT", "ggplot2", "future", "promises", "curl", "BiocManager"))
 BiocManager::install(c("dada2", "phyloseq", "Biostrings", "pwalign", "decontam", "DECIPHER", "ShortRead"))
 ```
+
+`phyloseq`, `Biostrings`, `decontam` et `DECIPHER` sont facultatifs pour l'appli Illumina :
+les fonctions correspondantes sont désactivées s'ils manquent. L'appli nanopore a besoin de
+`DECIPHER` et `ShortRead`. `pwalign` contient les fonctions d'alignement par paires que les
+versions récentes de Bioconductor (>= 3.19) ont sorties de `Biostrings` ; avec une version plus
+ancienne, l'appli utilise `Biostrings`.
 
 cutadapt (recommandé pour retirer les amorces) : `pip install cutadapt` ou
 `conda install -c bioconda cutadapt`. Sous Windows, passer par conda ou WSL et
@@ -24,7 +42,7 @@ indiquer le chemin de l'exécutable dans l'onglet Amorces.
 ## Lancement
 
 ```r
-shiny::runApp("chemin/vers/dada2shiny")   # ou ouvrir app.R dans RStudio > Run App
+shiny::runApp("chemin/vers/Dada2_shinyapp")   # ou ouvrir app.R dans RStudio > Run App
 ```
 
 Pour déboguer (tout dans le processus principal, sans calcul en arrière-plan) :
@@ -33,7 +51,7 @@ Pour déboguer (tout dans le processus principal, sans calcul en arrière-plan) 
 ## Organisation
 
 ```
-dada2shiny/
+Dada2_shinyapp/
 ├── app.R                  appli Illumina / DADA2
 ├── nanopore/app.R         appli Oxford Nanopore
 └── pipeline/
@@ -165,7 +183,7 @@ qualité, modèle d'erreur, taux de fusion), puis utiliser Tout lancer une fois 
 ## Appli nanopore
 
 ```r
-shiny::runApp("chemin/vers/dada2shiny/nanopore")
+shiny::runApp("chemin/vers/Dada2_shinyapp/nanopore")   # ou ouvrir nanopore/app.R > Run App
 ```
 
 Entrée : les FASTQ basecallés (MinKNOW / Dorado), un par code-barres ou un sous-dossier par

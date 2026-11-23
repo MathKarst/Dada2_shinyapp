@@ -46,6 +46,18 @@ The repository contains two apps that share the same R modules (`pipeline/`):
   step and can be resumed, and a standalone R script reproducing the analysis can be exported.
 - Long steps run in the background: the interface stays responsive and the log updates live.
 
+## Getting the code
+
+With git:
+
+```
+git clone https://github.com/MathKarst/Dada2_shinyapp.git
+```
+
+Without git: on the [repository page](https://github.com/MathKarst/Dada2_shinyapp), click
+**Code → Download ZIP**, then unzip. The folder is then called `Dada2_shinyapp-main`
+(rename it if you like). Updates: `git pull` in the folder, or download the ZIP again.
+
 ## Installation
 
 ```r
@@ -53,8 +65,10 @@ install.packages(c("shiny", "DT", "ggplot2", "future", "promises", "curl", "Bioc
 BiocManager::install(c("dada2", "phyloseq", "Biostrings", "pwalign", "decontam", "DECIPHER", "ShortRead"))
 ```
 
-`phyloseq`, `Biostrings`, `decontam` and `DECIPHER` are optional: the matching features are
-disabled when they are missing.
+`phyloseq`, `Biostrings`, `decontam` and `DECIPHER` are optional for the Illumina app: the
+matching features are disabled when they are missing. The nanopore app needs `DECIPHER` and
+`ShortRead`. `pwalign` holds the pairwise alignment functions that recent Bioconductor versions
+(>= 3.19) moved out of `Biostrings`; with older versions the app falls back to `Biostrings`.
 
 cutadapt (recommended for primer removal): `pip install cutadapt` or
 `conda install -c bioconda cutadapt`. On Windows, use conda or WSL and give the full path to
@@ -63,7 +77,7 @@ the executable in the *Amorces* (primers) tab.
 ## Running the app
 
 ```r
-shiny::runApp("path/to/dada2shiny")   # or open app.R in RStudio > Run App
+shiny::runApp("path/to/Dada2_shinyapp")   # or open app.R in RStudio > Run App
 ```
 
 Keep `app.R` next to the `pipeline/` folder. To debug (everything in the main R process, no
@@ -72,7 +86,7 @@ background computation): `options(dada2shiny.async = FALSE)` before `runApp()`.
 ## Repository layout
 
 ```
-dada2shiny/
+Dada2_shinyapp/
 ├── app.R                  Illumina / DADA2 app
 ├── nanopore/app.R         Oxford Nanopore app
 └── pipeline/
@@ -184,7 +198,7 @@ between requests, at most one status check per minute).
 ## Nanopore app
 
 ```r
-shiny::runApp("path/to/dada2shiny/nanopore")
+shiny::runApp("path/to/Dada2_shinyapp/nanopore")   # or open nanopore/app.R > Run App
 ```
 
 Input: basecalled FASTQ files (MinKNOW / Dorado), one per barcode or one sub-folder per barcode
